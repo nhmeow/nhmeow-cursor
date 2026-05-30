@@ -73,7 +73,7 @@ let
   kdeSvgBuild =
     let
       nominalSize = 24;
-      svgSize = 312;
+      displaySize = 32;
     in
     ''
         mkdir -p cursors_scalable
@@ -89,8 +89,8 @@ let
                 -e 's|height="312"|height="32"|' -e 's|height="312px"|height="32"|' \
                 -e 's|<svg |<svg viewBox="0 0 312 312" |' \
               ../${lib.escapeShellArg def.svg} > cursors_scalable/${def.name}/${def.name}.svg
-            hx=$(awk "BEGIN { printf \"%.0f\", ${builtins.toString def.hx} * ${builtins.toString svgSize} }")
-            hy=$(awk "BEGIN { printf \"%.0f\", ${builtins.toString def.hy} * ${builtins.toString svgSize} }")
+            hx=$(awk "BEGIN { printf \"%.0f\", ${builtins.toString def.hx} * ${builtins.toString displaySize} }")
+            hy=$(awk "BEGIN { printf \"%.0f\", ${builtins.toString def.hy} * ${builtins.toString displaySize} }")
             cat > cursors_scalable/${def.name}/metadata.json << JSONEOF
             [
               {

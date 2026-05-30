@@ -2,8 +2,8 @@
   {
     svg = "alias_312x312.svg";
     name = "alias";
-    hx = 0.500;
-    hy = 0.737;
+    hx = 0.208;
+    hy = 0.240;
     overrides = [
       "alias"
       "dnd-link"
@@ -13,8 +13,8 @@
   {
     svg = "copy_312x312.svg";
     name = "copy";
-    hx = 0.500;
-    hy = 0.737;
+    hx = 0.208;
+    hy = 0.240;
     overrides = [
       "copy"
       "dnd-copy"
@@ -34,8 +34,8 @@
   {
     svg = "default_312x312.svg";
     name = "default";
-    hx = 0.500;
-    hy = 0.737;
+    hx = 0.208;
+    hy = 0.240;
     overrides = [
       "default"
       "left_ptr"
@@ -61,8 +61,8 @@
   {
     svg = "help_312x312.svg";
     name = "help";
-    hx = 0.500;
-    hy = 0.737;
+    hx = 0.103;
+    hy = 0.103;
     overrides = [
       "help"
       "question_arrow"
