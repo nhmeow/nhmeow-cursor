@@ -70,11 +70,19 @@
     ];
   }
   {
-    svg = "main_312x312.svg";
-    name = "main";
+    svg = "v_double_arrow_312x312.svg";
+    name = "v_double_arrow";
     hx = 0.500;
     hy = 0.500;
-    overrides = [ "main" ];
+    overrides = [
+      "v_double_arrow"
+      "row-resize"
+      "sb_v_double_arrow"
+      "ns-resize"
+      "size_ver"
+      "n-resize"
+      "s-resize"
+    ];
   }
   {
     svg = "move_312x312.svg";
