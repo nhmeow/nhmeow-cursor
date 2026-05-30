@@ -44,8 +44,16 @@ stdenv.mkDerivation {
     srcDir="$PWD"
     mkdir -p xcur
 
+    # XCursor
     ${build.xcursorBuild}
 
+    # KDE SVG (cursors_scalable)
+    mkdir -p kde-svg
+    cd kde-svg
+    ${build.kdeSvgBuild}
+    cd "$srcDir"
+
+    # Hyprcursor
     mkdir -p hypr-work
     cd hypr-work
     ${build.hyprBuild}
@@ -59,6 +67,7 @@ stdenv.mkDerivation {
 
     cp ${build.indexTheme} $out/share/icons/${themeName}/index.theme
     cp -r xcur $out/share/icons/${themeName}/cursors
+    cp -r kde-svg/cursors_scalable $out/share/icons/${themeName}/cursors_scalable
 
     for d in hypr-work/hypr-out/*${themeName}*; do
       if [ -d "$d" ]; then
@@ -68,7 +77,7 @@ stdenv.mkDerivation {
   '';
 
   meta = with lib; {
-    description = "nhmeow cursor theme (XCursor + Hyprcursor)";
+    description = "nhmeow cursor theme (XCursor + KDE SVG + Hyprcursor)";
     homepage = "https://github.com/nhmeow/nhmeow-cursor";
     license = licenses.mit;
     platforms = platforms.all;

@@ -1,54 +1,46 @@
 # nhmeow-cursor
 
-Mouse cursor theme for X11 & Wayland, built with Nix.
+Mouse cursor theme built with Nix. One source → three formats.
 
-Packs both **XCursor** (X11) and **Hyprcursor** (Hyprland) from a single set of SVG sources.
+| Format      | Directory             | Targets               |
+|-------------|-----------------------|-----------------------|
+| XCursor     | `cursors/`            | X11, all DE, Wayland fallback |
+| KDE SVG     | `cursors_scalable/`   | Plasma 6.2+ Wayland   |
+| Hyprcursor  | `hyprcursors/`        | Hyprland              |
 
 ## Structure
 
 ```
-.
-├── flake.nix
-├── checks/pre-commit-check/default.nix
-├── shells/default/default.nix
-├── packages/nhmeow-cursor/
-│   ├── default.nix        # derivation
-│   ├── build.nix          # build helpers (xcursorgen + hyprcursor-util)
-│   ├── cursors.nix        # cursor definitions (SVG -> names + hotspots)
-│   └── src/               # SVG cursor images
-└── statix.toml
+packages/nhmeow-cursor/
+├── default.nix        # derivation
+├── build.nix          # build helpers (xcursorgen + hyprcursor-util + KDE SVG)
+├── cursors.nix        # cursor definitions (SVG -> names + hotspots)
+└── src/               # SVG cursor images
 ```
 
 ## Usage
 
 ```sh
-# Build
 nix build .#nhmeow-cursor
-
-# Try (quick test)
-ln -sf $(readlink -f result/share/icons/nhmeow-cursor) ~/.local/share/icons/nhmeow-cursor
-gsettings set org.gnome.desktop.interface cursor-theme "nhmeow-cursor"
+result/share/icons/nhmeow-cursor/
+├── cursors/              # XCursor (16 files + 42 aliases)
+├── cursors_scalable/     # KDE SVG (16 dirs + 42 alias symlinks)
+├── hyprcursors/          # Hyprcursor (16 .hlc)
+├── index.theme
+└── manifest.hl
 ```
-
-## Dev
-
-```sh
-direnv allow
-```
-
-Shell provides `xcursorgen`, `rsvg-convert`, `hyprcursor-util`.
 
 ## Adding cursors
 
-1. Drop an SVG in `packages/nhmeow-cursor/src/` named `{name}_312x312.svg`
-2. Add an entry to `cursors.nix`:
+1. Add SVG to `src/`
+2. Add entry to `cursors.nix`:
 
 ```nix
 {
   svg = "mycursor_312x312.svg";
   name = "mycursor";
-  hx = 0.08;   # hotspot x (0-1)
-  hy = 0.05;   # hotspot y (0-1)
+  hx = 0.08;   # hotspot x (0-1 fraction)
+  hy = 0.05;   # hotspot y (0-1 fraction)
   overrides = [ "mycursor" "alt_name" ];
 }
 ```
