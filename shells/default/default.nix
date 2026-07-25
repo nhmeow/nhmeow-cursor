@@ -1,11 +1,21 @@
 {
   inputs,
   pkgs,
-  mkShell,
   system,
   ...
 }:
-mkShell {
+let
+  git-hooks-check = inputs.git-hooks.lib.${system}.run {
+    src = ../../.;
+    hooks = {
+      # formatter
+      nixfmt.enable = true;
+      deadnix.enable = true;
+      statix.enable = true;
+    };
+  };
+in
+pkgs.mkShell {
   packages = with pkgs; [
     nixfmt
     deadnix
@@ -15,6 +25,6 @@ mkShell {
     hyprcursor
   ];
 
-  inherit (inputs.self.checks.${system}.pre-commit-check) shellHook;
-  buildInputs = inputs.self.checks.${system}.pre-commit-check.enabledPackages;
+  inherit (git-hooks-check) shellHook;
+  buildInputs = git-hooks-check.enabledPackages;
 }
